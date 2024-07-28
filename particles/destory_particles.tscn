@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmdwuafry2884"]
+
+[ext_resource type="Script" path="res://particles/destory_particles.gd" id="1_41ofx"]
+[ext_resource type="Texture2D" uid="uid://53ndw0mx77un" path="res://assets/asteroid_1.png" id="1_f7pnm"]
+
+[node name="DestoryParticles" type="CPUParticles2D"]
+emitting = false
+amount = 4
+one_shot = true
+draw_order = 1
+texture = ExtResource("1_f7pnm")
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 128.0
+initial_velocity_max = 256.0
+scale_amount_min = 0.7
+scale_amount_max = 1.5
+color = Color(0.704845, 0.490181, 0.517408, 1)
+script = ExtResource("1_41ofx")
