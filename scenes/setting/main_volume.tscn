@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://0frv3gm1tlas"]
+
+[ext_resource type="Script" path="res://scenes/setting/main_volume.gd" id="1_5qauk"]
+
+[node name="MainVolume" type="HBoxContainer"]
+custom_minimum_size = Vector2(650, 64)
+size_flags_vertical = 4
+script = ExtResource("1_5qauk")
+volume_name = "主音量"
+max_volume = 100.0
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "主音量"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 0.01
+value = 100.0
+
+[node name="VolumeNumber" type="Label" parent="."]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckButton" parent="."]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "开启/关闭"
+alignment = 1
+icon_alignment = 1
+
+[node name="Space" type="Control" parent="."]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+
+[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="toggled" from="CheckBox" to="." method="_on_check_box_toggled"]

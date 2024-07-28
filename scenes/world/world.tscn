@@ -1,0 +1,933 @@
+[gd_scene load_steps=64 format=3 uid="uid://cu7rqni142qcr"]
+
+[ext_resource type="Shader" path="res://shaders/star_sky.gdshader" id="1_0x0t3"]
+[ext_resource type="Script" path="res://scenes/world/world.gd" id="1_qtr10"]
+[ext_resource type="PackedScene" uid="uid://d51pcy7fh15c" path="res://scenes/asteroids/asteroid_1.tscn" id="2_2myef"]
+[ext_resource type="Script" path="res://scenes/world/annihilator.gd" id="3_0vp1l"]
+[ext_resource type="Script" path="res://scenes/world/start_time.gd" id="3_jcik3"]
+[ext_resource type="Script" path="res://scenes/world/stop_interface.gd" id="3_o2ryf"]
+[ext_resource type="PackedScene" uid="uid://fqua1v7nc2pc" path="res://scenes/player/player.tscn" id="3_t0kd2"]
+[ext_resource type="Shader" path="res://shaders/ground_glass.gdshader" id="4_ml38v"]
+[ext_resource type="Script" path="res://scenes/world/asteroid_generator.gd" id="4_wyp2v"]
+[ext_resource type="PackedScene" uid="uid://ov7rawysw77k" path="res://scenes/asteroids/asteroid_2.tscn" id="5_eiwg3"]
+[ext_resource type="Shader" path="res://shaders/VHS.gdshader" id="6_7jdga"]
+[ext_resource type="Script" path="res://scenes/world/game_over_interface.gd" id="6_m32qs"]
+[ext_resource type="PackedScene" uid="uid://csq32j7muy2tt" path="res://scenes/asteroids/asteroid_3.tscn" id="6_s14ws"]
+[ext_resource type="PackedScene" uid="uid://b321qqiopby87" path="res://scenes/asteroids/asteroid_4.tscn" id="7_3t2xw"]
+[ext_resource type="Script" path="res://scenes/world/prop_time_bar.gd" id="7_buk8l"]
+[ext_resource type="PackedScene" uid="uid://esom73u4b4r0" path="res://scenes/asteroids/asteroid_5.tscn" id="8_1uftd"]
+[ext_resource type="Script" path="res://scenes/world/label.gd" id="8_tneeu"]
+[ext_resource type="Script" path="res://scenes/world/count.gd" id="10_b5d23"]
+[ext_resource type="Script" path="res://scenes/world/health_bar.gd" id="11_0cv51"]
+[ext_resource type="PackedScene" uid="uid://drht5v4oa5tmp" path="res://scenes/setting/setting.tscn" id="12_eo3hu"]
+[ext_resource type="Script" path="res://scenes/world/player_destory.gd" id="12_lv4ai"]
+[ext_resource type="PackedScene" uid="uid://c8dtvy8uoxcbo" path="res://scenes/props/force_field_galaxy.tscn" id="19_j64mh"]
+[ext_resource type="PackedScene" uid="uid://548f0478ta0a" path="res://scenes/props/spare_ship.tscn" id="22_04jqk"]
+[ext_resource type="PackedScene" uid="uid://dw4r0fpppj7fm" path="res://scenes/props/black_hole.tscn" id="22_mk0nw"]
+[ext_resource type="Shader" path="res://shaders/black_and_white.gdshader" id="24_em8xa"]
+[ext_resource type="PackedScene" uid="uid://dr7d0lixpxy5t" path="res://scenes/props/repair_tool.tscn" id="26_e7mor"]
+[ext_resource type="PackedScene" uid="uid://dmjpeidp7y7fa" path="res://scenes/props/boundary_stabilizer.tscn" id="27_vsaig"]
+[ext_resource type="PackedScene" uid="uid://b2bmi66cdt181" path="res://scenes/props/laser_transmitter.tscn" id="27_xbgfu"]
+[ext_resource type="Script" path="res://scenes/world/deceleration_zone.gd" id="28_pnvra"]
+[ext_resource type="PackedScene" uid="uid://byxwvlf3hhc2x" path="res://scenes/props/deceleration_machine.tscn" id="29_amy45"]
+[ext_resource type="PackedScene" uid="uid://chv2jks4fdbl0" path="res://scenes/props/fate_dice.tscn" id="29_f1c8f"]
+[ext_resource type="PackedScene" uid="uid://bm4jcqx5p43xo" path="res://scenes/props/gravity_eliminator.tscn" id="30_c8jw1"]
+[ext_resource type="PackedScene" uid="uid://54gy3c7es7uo" path="res://scenes/props/damaged_armour.tscn" id="31_pju1v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k3efy"]
+shader = ExtResource("1_0x0t3")
+shader_parameter/dimensions = Vector2(1024, 600)
+shader_parameter/small_stars = 50.0
+shader_parameter/small_stars_far_size = 0.5
+shader_parameter/small_stars_near_size = 1.0
+shader_parameter/large_stars = 8.0
+shader_parameter/large_stars_far_size = 0.5
+shader_parameter/large_stars_near_size = 1.0
+shader_parameter/far_stars_color = Color(0.5, 0, 1, 1)
+shader_parameter/near_stars_color = Color(1, 1, 1, 1)
+shader_parameter/base_scroll_speed = 0.05
+shader_parameter/additional_scroll_speed = 0.05
+
+[sub_resource type="LabelSettings" id="LabelSettings_miaix"]
+font_size = 48
+outline_size = 3
+outline_color = Color(0.695919, 0, 0.324449, 1)
+shadow_size = 2
+shadow_color = Color(0.758192, 0.758192, 0.758192, 0.356863)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_yqqbr"]
+font_size = 32
+font_color = Color(1, 1, 1, 0.580392)
+outline_size = 3
+outline_color = Color(0.644958, 0.291942, 0.32533, 1)
+shadow_size = 3
+shadow_color = Color(0.41598, 0.41598, 0.41598, 0.301961)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="Animation" id="Animation_reydv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yg03w"]
+resource_name = "label_enter"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_uwsoq"]
+resource_name = "label_exit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e5l7r"]
+_data = {
+"RESET": SubResource("Animation_reydv"),
+"label_enter": SubResource("Animation_yg03w"),
+"label_exit": SubResource("Animation_uwsoq")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_iqx84"]
+font_size = 24
+outline_size = 3
+outline_color = Color(0.787011, 0.325045, 0.613372, 1)
+shadow_size = 4
+shadow_color = Color(1, 1, 1, 0.243137)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pylj7"]
+bg_color = Color(1, 1, 1, 0.388235)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3aog8"]
+bg_color = Color(1, 0.301329, 0.405217, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytwu3"]
+bg_color = Color(0.6, 0.6, 0.6, 0.462745)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ybacd"]
+bg_color = Color(0.976674, 0.630903, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2nr4u"]
+shader = ExtResource("6_7jdga")
+shader_parameter/range = 0.01
+shader_parameter/noiseQuality = 40.0
+shader_parameter/noiseIntensity = 0.00900001
+shader_parameter/offsetIntensity = 0.009
+shader_parameter/colorOffsetIntensity = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_klrrx"]
+shader = ExtResource("4_ml38v")
+shader_parameter/lod = 0.0
+
+[sub_resource type="Animation" id="Animation_g13od"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_n103o"]
+resource_name = "stop_enter"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 5.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_t41x5"]
+resource_name = "stop_exit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_awk6c"]
+_data = {
+"RESET": SubResource("Animation_g13od"),
+"stop_enter": SubResource("Animation_n103o"),
+"stop_exit": SubResource("Animation_t41x5")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_08iwt"]
+shader = ExtResource("4_ml38v")
+shader_parameter/lod = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_k7et2"]
+font_size = 48
+outline_size = 3
+outline_color = Color(0.995147, 3.85046e-07, 0.548875, 1)
+shadow_size = 2
+shadow_color = Color(1, 1, 1, 0.345098)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kwdh5"]
+font_size = 24
+
+[sub_resource type="Animation" id="Animation_xi3a3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_17us1"]
+resource_name = "game_over_enter"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 5.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_rydb4"]
+resource_name = "game_over_exit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ighvr"]
+_data = {
+"RESET": SubResource("Animation_xi3a3"),
+"game_over_enter": SubResource("Animation_17us1"),
+"game_over_exit": SubResource("Animation_rydb4")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_axc6y"]
+shader = ExtResource("24_em8xa")
+shader_parameter/range = 0.05
+shader_parameter/noiseQuality = 90.3
+shader_parameter/noiseIntensity = 0.1
+shader_parameter/offsetIntensity = 0.03
+shader_parameter/colorOffsetIntensity = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uevj8"]
+size = Vector2(200, 3000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ggiee"]
+size = Vector2(3000, 168)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lmsso"]
+shader = ExtResource("6_7jdga")
+shader_parameter/range = 0.05
+shader_parameter/noiseQuality = 20.0
+shader_parameter/noiseIntensity = 0.0088
+shader_parameter/offsetIntensity = 0.03
+shader_parameter/colorOffsetIntensity = 0.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iko3c"]
+size = Vector2(647, 1532)
+
+[node name="World" type="Node"]
+script = ExtResource("1_qtr10")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+material = SubResource("ShaderMaterial_k3efy")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="StartTime" type="Label" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -33.5
+offset_right = 20.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "3"
+label_settings = SubResource("LabelSettings_miaix")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_jcik3")
+
+[node name="Timer" type="Timer" parent="UI/StartTime"]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="Label" type="Label" parent="UI"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -166.0
+offset_top = -46.5
+offset_right = 166.0
+offset_bottom = 46.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "按下空格/点击进行跳跃
+按下Ctrl /长按进行悬浮"
+label_settings = SubResource("LabelSettings_yqqbr")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_tneeu")
+
+[node name="Label" type="Label" parent="UI/Label"]
+visible = false
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = 1.5
+offset_right = 24.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "悬浮需要消耗分数"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/Label"]
+libraries = {
+"": SubResource("AnimationLibrary_e5l7r")
+}
+
+[node name="Timer" type="Timer" parent="UI/Label"]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Count" type="Label" parent="UI"]
+custom_minimum_size = Vector2(200, 0)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "当前分数："
+label_settings = SubResource("LabelSettings_iqx84")
+vertical_alignment = 1
+script = ExtResource("10_b5d23")
+
+[node name="HealthBar" type="HBoxContainer" parent="UI"]
+offset_right = 312.0
+offset_bottom = 40.0
+script = ExtResource("11_0cv51")
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/HealthBar"]
+custom_minimum_size = Vector2(200, 36)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_pylj7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3aog8")
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="UI/HealthBar"]
+layout_mode = 2
+text = "余剩血量：100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PropTimeBar" type="VBoxContainer" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = -76.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 2
+script = ExtResource("7_buk8l")
+
+[node name="EnergyContainer" type="HBoxContainer" parent="UI/PropTimeBar"]
+visible = false
+layout_mode = 2
+
+[node name="EnergyLabel" type="Label" parent="UI/PropTimeBar/EnergyContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+text = "道具余剩时间：1/10"
+vertical_alignment = 1
+
+[node name="EnergyBar" type="ProgressBar" parent="UI/PropTimeBar/EnergyContainer"]
+custom_minimum_size = Vector2(200, 36)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ytwu3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ybacd")
+value = 50.0
+show_percentage = false
+
+[node name="DecelerationContainer" type="HBoxContainer" parent="UI/PropTimeBar"]
+visible = false
+layout_mode = 2
+
+[node name="DecelerationLabel" type="Label" parent="UI/PropTimeBar/DecelerationContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+text = "道具余剩时间：1/10"
+vertical_alignment = 1
+
+[node name="DecelerationBar" type="ProgressBar" parent="UI/PropTimeBar/DecelerationContainer"]
+custom_minimum_size = Vector2(200, 36)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ytwu3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ybacd")
+value = 50.0
+show_percentage = false
+
+[node name="AgavityContainer" type="HBoxContainer" parent="UI/PropTimeBar"]
+visible = false
+layout_mode = 2
+
+[node name="AgavityLabel" type="Label" parent="UI/PropTimeBar/AgavityContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+text = "道具余剩时间：1/10"
+vertical_alignment = 1
+
+[node name="AgavityBar" type="ProgressBar" parent="UI/PropTimeBar/AgavityContainer"]
+custom_minimum_size = Vector2(200, 36)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ytwu3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ybacd")
+value = 50.0
+show_percentage = false
+
+[node name="DamagedArmourContainer" type="HBoxContainer" parent="UI/PropTimeBar"]
+visible = false
+layout_mode = 2
+
+[node name="DamagedArmourLabel" type="Label" parent="UI/PropTimeBar/DamagedArmourContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+text = "道具余剩时间：1/10"
+vertical_alignment = 1
+
+[node name="DamagedArmourBar" type="ProgressBar" parent="UI/PropTimeBar/DamagedArmourContainer"]
+custom_minimum_size = Vector2(200, 36)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ytwu3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ybacd")
+show_percentage = false
+
+[node name="VHS" type="ColorRect" parent="UI"]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_2nr4u")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="StopButton" type="Button" parent="UI"]
+custom_minimum_size = Vector2(64, 64)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_bottom = 64.0
+grow_horizontal = 0
+text = "||"
+
+[node name="StopInterface" type="PanelContainer" parent="UI"]
+visible = false
+material = SubResource("ShaderMaterial_klrrx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_o2ryf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/StopInterface"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ContinueButton" type="Button" parent="UI/StopInterface/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "继续游戏"
+
+[node name="ResetButton" type="Button" parent="UI/StopInterface/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+text = "重新开始"
+
+[node name="SettingButton" type="Button" parent="UI/StopInterface/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "游戏设置"
+
+[node name="BackButton" type="Button" parent="UI/StopInterface/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "返回主菜单"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/StopInterface"]
+libraries = {
+"": SubResource("AnimationLibrary_awk6c")
+}
+
+[node name="GameOverInterface" type="PanelContainer" parent="UI"]
+visible = false
+material = SubResource("ShaderMaterial_08iwt")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_m32qs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GameOverInterface"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="UI/GameOverInterface/VBoxContainer"]
+layout_mode = 2
+text = "游戏结束！！！"
+label_settings = SubResource("LabelSettings_k7et2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Count" type="Label" parent="UI/GameOverInterface/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+text = "得分： 1000"
+label_settings = SubResource("LabelSettings_kwdh5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="UI/GameOverInterface/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+placeholder_text = "请输入玩家姓名"
+alignment = 1
+
+[node name="ResetButton" type="Button" parent="UI/GameOverInterface/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+disabled = true
+text = "重新开始"
+
+[node name="BackButton" type="Button" parent="UI/GameOverInterface/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+disabled = true
+text = "返回主菜单"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/GameOverInterface"]
+libraries = {
+"": SubResource("AnimationLibrary_ighvr")
+}
+
+[node name="SettingInterface" parent="UI" instance=ExtResource("12_eo3hu")]
+visible = false
+
+[node name="Player" parent="." instance=ExtResource("3_t0kd2")]
+unique_name_in_owner = true
+position = Vector2(0, 540)
+
+[node name="AsteroidGenerator" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(2558, 289)
+script = ExtResource("4_wyp2v")
+asteroids = Array[PackedScene]([ExtResource("5_eiwg3"), ExtResource("6_s14ws"), ExtResource("2_2myef"), ExtResource("5_eiwg3"), ExtResource("6_s14ws"), ExtResource("7_3t2xw"), ExtResource("8_1uftd"), ExtResource("6_s14ws")])
+props = Array[PackedScene]([ExtResource("22_04jqk"), ExtResource("19_j64mh"), ExtResource("19_j64mh"), ExtResource("19_j64mh"), ExtResource("19_j64mh"), ExtResource("22_mk0nw"), ExtResource("26_e7mor"), ExtResource("26_e7mor"), ExtResource("29_amy45"), ExtResource("29_amy45"), ExtResource("30_c8jw1"), ExtResource("30_c8jw1"), ExtResource("31_pju1v"), ExtResource("31_pju1v"), ExtResource("27_xbgfu"), ExtResource("27_xbgfu"), ExtResource("29_f1c8f"), ExtResource("27_vsaig"), ExtResource("27_vsaig")])
+prop_chance = 8
+
+[node name="Timer" type="Timer" parent="AsteroidGenerator"]
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+zoom = Vector2(0.7, 0.7)
+
+[node name="Annihilator" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-820, 566)
+collision_layer = 0
+collision_mask = 10
+script = ExtResource("3_0vp1l")
+
+[node name="ColorRect" type="ColorRect" parent="Annihilator"]
+material = SubResource("ShaderMaterial_axc6y")
+offset_left = -100.0
+offset_top = -1495.0
+offset_right = 100.0
+offset_bottom = 1497.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Annihilator"]
+shape = SubResource("RectangleShape2D_uevj8")
+
+[node name="PlayerDestory" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(600, 533)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("12_lv4ai")
+
+[node name="Destructor1" type="CollisionShape2D" parent="PlayerDestory"]
+position = Vector2(200, -850)
+shape = SubResource("RectangleShape2D_ggiee")
+
+[node name="Line2D" type="Line2D" parent="PlayerDestory/Destructor1"]
+position = Vector2(-499, 434)
+points = PackedVector2Array(-1000, -366, 2000, -366)
+width = 12.0
+default_color = Color(0.529075, 0.00362386, 0.943157, 0.556863)
+
+[node name="Destructor2" type="CollisionShape2D" parent="PlayerDestory"]
+position = Vector2(200, 860)
+shape = SubResource("RectangleShape2D_ggiee")
+
+[node name="Line2D2" type="Line2D" parent="PlayerDestory/Destructor2"]
+position = Vector2(-499, 297)
+points = PackedVector2Array(-1000, -366, 2000, -366)
+width = 12.0
+default_color = Color(0.529075, 0.00362386, 0.943157, 0.556863)
+
+[node name="StandbyDestructor1" type="CollisionShape2D" parent="PlayerDestory"]
+position = Vector2(200, -1120)
+shape = SubResource("RectangleShape2D_ggiee")
+
+[node name="Line2D" type="Line2D" parent="PlayerDestory/StandbyDestructor1"]
+position = Vector2(-499, 434)
+points = PackedVector2Array(-1000, -366, 2000, -366)
+width = 12.0
+default_color = Color(0.529075, 0.00362386, 0.943157, 0.556863)
+
+[node name="StandbyDestructor2" type="CollisionShape2D" parent="PlayerDestory"]
+position = Vector2(200, 1119)
+shape = SubResource("RectangleShape2D_ggiee")
+
+[node name="Line2D2" type="Line2D" parent="PlayerDestory/StandbyDestructor2"]
+position = Vector2(-499, 297)
+points = PackedVector2Array(-1000, -366, 2000, -366)
+width = 12.0
+default_color = Color(0.529075, 0.00362386, 0.943157, 0.556863)
+
+[node name="DecelerationZone" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+script = ExtResource("28_pnvra")
+
+[node name="ColorRect" type="ColorRect" parent="DecelerationZone"]
+visible = false
+material = SubResource("ShaderMaterial_lmsso")
+offset_left = 1689.0
+offset_top = -237.0
+offset_right = 2333.0
+offset_bottom = 1306.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DecelerationZone"]
+position = Vector2(2005, 535)
+shape = SubResource("RectangleShape2D_iko3c")
+
+[node name="DecelerationMachine" parent="." instance=ExtResource("29_amy45")]
+position = Vector2(1496, 131)
+
+[connection signal="start_game" from="UI/StartTime" to="UI/Label" method="_on_start_time_start_game"]
+[connection signal="timeout" from="UI/StartTime/Timer" to="UI/StartTime" method="_on_timer_timeout"]
+[connection signal="timeout" from="UI/Label/Timer" to="UI/Label" method="_on_timer_timeout"]
+[connection signal="value_changed" from="UI/PropTimeBar/EnergyContainer/EnergyBar" to="UI/PropTimeBar" method="_on_energy_bar_value_changed"]
+[connection signal="value_changed" from="UI/PropTimeBar/DecelerationContainer/DecelerationBar" to="UI/PropTimeBar" method="_on_deceleration_bar_value_changed"]
+[connection signal="value_changed" from="UI/PropTimeBar/AgavityContainer/AgavityBar" to="UI/PropTimeBar" method="_on_agavity_bar_value_changed"]
+[connection signal="value_changed" from="UI/PropTimeBar/DamagedArmourContainer/DamagedArmourBar" to="UI/PropTimeBar" method="_on_damaged_armour_bar_value_changed"]
+[connection signal="pressed" from="UI/StopButton" to="UI/StopInterface" method="_on_stop_button_pressed"]
+[connection signal="pressed" from="UI/StopInterface/VBoxContainer/ContinueButton" to="UI/StopInterface" method="_on_continue_button_pressed"]
+[connection signal="pressed" from="UI/StopInterface/VBoxContainer/ResetButton" to="UI/StopInterface" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="UI/StopInterface/VBoxContainer/SettingButton" to="UI/StopInterface" method="_on_setting_button_pressed"]
+[connection signal="pressed" from="UI/StopInterface/VBoxContainer/BackButton" to="UI/StopInterface" method="_on_back_button_pressed"]
+[connection signal="visibility_changed" from="UI/GameOverInterface" to="UI/GameOverInterface" method="_on_visibility_changed"]
+[connection signal="text_changed" from="UI/GameOverInterface/VBoxContainer/LineEdit" to="UI/GameOverInterface" method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="UI/GameOverInterface/VBoxContainer/ResetButton" to="UI/GameOverInterface" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="UI/GameOverInterface/VBoxContainer/BackButton" to="UI/GameOverInterface" method="_on_back_button_pressed"]
+[connection signal="agravity_time_update" from="Player" to="UI/PropTimeBar" method="_on_player_agravity_time_update"]
+[connection signal="black_hole_is_enable" from="Player" to="Annihilator" method="_on_player_black_hole_is_enable"]
+[connection signal="count_update" from="Player" to="UI/Count" method="_on_player_count_update"]
+[connection signal="damaged_armour_time_update" from="Player" to="UI/PropTimeBar" method="_on_player_damaged_armour_time_update"]
+[connection signal="deceleration_time_update" from="Player" to="UI/PropTimeBar" method="_on_player_deceleration_time_update"]
+[connection signal="energy_time_update" from="Player" to="UI/PropTimeBar" method="_on_player_energy_time_update"]
+[connection signal="line_minification" from="Player" to="PlayerDestory" method="_on_annihilator_line_minification"]
+[connection signal="player_health_update" from="Player" to="UI/HealthBar" method="_on_player_player_health_update"]
+[connection signal="player_is_dead" from="Player" to="UI/GameOverInterface" method="_on_player_player_is_dead"]
+[connection signal="reversal_is_update" from="Player" to="Annihilator" method="_on_player_reversal_is_update"]
+[connection signal="boundary_rotate" from="AsteroidGenerator" to="PlayerDestory" method="_on_asteroid_generator_boundary_rotate"]
+[connection signal="some_tool_tip" from="AsteroidGenerator" to="UI/Label" method="_on_asteroid_generator_some_tool_tip"]
+[connection signal="timeout" from="AsteroidGenerator/Timer" to="AsteroidGenerator" method="_on_timer_timeout"]
+[connection signal="body_entered" from="Annihilator" to="Annihilator" method="_on_body_entered"]
+[connection signal="count_update" from="Annihilator" to="UI/Count" method="_on_annihilator_count_update"]
+[connection signal="line_minification" from="Annihilator" to="PlayerDestory" method="_on_annihilator_line_minification"]
+[connection signal="some_tool_tip" from="Annihilator" to="UI/Label" method="_on_asteroid_generator_some_tool_tip"]
+[connection signal="body_entered" from="PlayerDestory" to="PlayerDestory" method="_on_body_entered"]
+[connection signal="is_not_rotate" from="PlayerDestory" to="AsteroidGenerator" method="_on_player_destory_is_not_rotate"]
+[connection signal="body_entered" from="DecelerationZone" to="DecelerationZone" method="_on_body_entered"]

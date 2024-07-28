@@ -1,0 +1,150 @@
+[gd_scene load_steps=16 format=3 uid="uid://fqua1v7nc2pc"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_0b3ub"]
+[ext_resource type="Script" path="res://scripts/health_module/health_module.gd" id="3_gh5sf"]
+[ext_resource type="Shader" path="res://shaders/hight_light.gdshader" id="4_w8n2w"]
+[ext_resource type="Texture2D" uid="uid://tgf5644n1x1b" path="res://assets/player.png" id="5_31r4j"]
+[ext_resource type="Shader" path="res://shaders/energy_shield.gdshader" id="5_74l15"]
+[ext_resource type="Texture2D" uid="uid://bwb7rmo2suajy" path="res://assets/Sprite-0001.png" id="6_7otkg"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vk1kj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_20oac"]
+shader = ExtResource("5_74l15")
+shader_parameter/radius = 0.9
+shader_parameter/thickness = 0.12
+shader_parameter/color = Color(0.74902, 0.301961, 0.352941, 0.615686)
+shader_parameter/brightness = 2.72
+shader_parameter/angular_speed = 2.77
+shader_parameter/radial_speed = 0.42
+shader_parameter/alpha = 0.34
+shader_parameter/noise = SubResource("NoiseTexture2D_vk1kj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dy8k4"]
+shader = ExtResource("4_w8n2w")
+shader_parameter/shine_color = Color(1, 1, 1, 0.54902)
+shader_parameter/shine_progress = 0.0
+shader_parameter/shine_size = 0.03
+shader_parameter/shine_angle = 45.0
+shader_parameter/is_up_and_down = true
+shader_parameter/amplitude = 15.0
+shader_parameter/speed = 1.5
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8nbw3"]
+radius = 50.0
+height = 160.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hj70c"]
+radius = 50.0
+height = 170.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b8yit"]
+radius = 173.807
+
+[sub_resource type="Animation" id="Animation_q1hxx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/shine_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_tprpa"]
+resource_name = "idle"
+length = 1.2
+loop_mode = 1
+step = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/shine_progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u0dnq"]
+_data = {
+"RESET": SubResource("Animation_q1hxx"),
+"idle": SubResource("Animation_tprpa")
+}
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 0
+script = ExtResource("1_0b3ub")
+jump_speed = -300.0
+
+[node name="EnergyShield" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_20oac")
+scale = Vector2(3, 3)
+texture = ExtResource("6_7otkg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_dy8k4")
+texture = ExtResource("5_31r4j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_8nbw3")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(4, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_hj70c")
+debug_color = Color(0.992037, 0, 0.257559, 0.42)
+
+[node name="HealthModule" type="Node" parent="."]
+script = ExtResource("3_gh5sf")
+
+[node name="ForceField" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+collision_priority = 2.0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ForceField"]
+shape = SubResource("CircleShape2D_b8yit")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_u0dnq")
+}
+
+[node name="EnergyTimer" type="Timer" parent="."]
+
+[node name="DecelerationTimer" type="Timer" parent="."]
+
+[node name="AgravityTimer" type="Timer" parent="."]
+
+[node name="DamagedArmourTimer" type="Timer" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+visible = false
+rotation = -1.5708
+enabled = false
+target_position = Vector2(0, 3000)
+collision_mask = 2
+
+[node name="Line2D" type="Line2D" parent="RayCast2D"]
+points = PackedVector2Array(0, 0, 0, 3000)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="health_update" from="HealthModule" to="." method="_on_health_module_health_update"]
+[connection signal="is_dead" from="HealthModule" to="." method="_on_health_module_is_dead"]
+[connection signal="body_entered" from="ForceField" to="." method="_on_force_field_body_entered"]

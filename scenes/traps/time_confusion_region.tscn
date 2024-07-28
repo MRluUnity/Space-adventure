@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://by26r4ecyicwi"]
+
+[ext_resource type="Script" path="res://scenes/traps/time_confusion_region.gd" id="1_atkuo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2y3b"]
+size = Vector2(1197, 1988)
+
+[node name="TimeConfusionRegion" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_atkuo")
+min_time_scale = 0.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(600.5, 0)
+shape = SubResource("RectangleShape2D_g2y3b")
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2(708, 0)
+points = PackedVector2Array(-704, -1008, -704, 1008)
+
+[node name="Line2D2" type="Line2D" parent="."]
+position = Vector2(1899, 0)
+points = PackedVector2Array(-704, -1008, -704, 1008)
+default_color = Color(1, 1, 1, 0.176471)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

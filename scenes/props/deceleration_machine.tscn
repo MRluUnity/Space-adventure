@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://byxwvlf3hhc2x"]
+
+[ext_resource type="Script" path="res://scenes/props/deceleration_machine.gd" id="1_60ubq"]
+[ext_resource type="Texture2D" uid="uid://bwb7rmo2suajy" path="res://assets/Sprite-0001.png" id="2_cl6o2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vbyoe"]
+radius = 65.0308
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e2vm1"]
+radius = 76.6551
+
+[node name="DecelerationMachine" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_60ubq")
+min_speed = 300.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.363736, 0.372588, 0.329888, 1)
+texture = ExtResource("2_cl6o2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vbyoe")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_e2vm1")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

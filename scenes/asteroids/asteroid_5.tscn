@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://esom73u4b4r0"]
+
+[ext_resource type="Script" path="res://scenes/asteroids/asteroid_5.gd" id="1_lvs1p"]
+[ext_resource type="Texture2D" uid="uid://0olr33cmo53s" path="res://assets/asteroid_5.png" id="2_6g01x"]
+[ext_resource type="Shader" path="res://shaders/outline_shader.gdshader" id="2_qkp3f"]
+[ext_resource type="Shader" path="res://shaders/noise_border.gdshader" id="4_f2q1o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3wg22"]
+shader = ExtResource("2_qkp3f")
+shader_parameter/thickness = 0.5
+shader_parameter/ring_count = 16
+shader_parameter/ring_offset = null
+shader_parameter/outline_color = Color(0.894118, 0, 0.141176, 0.435294)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 0.3
+shader_parameter/square_border = false
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k0qv4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_to7r8"]
+noise = SubResource("FastNoiseLite_k0qv4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2jk2t"]
+shader = ExtResource("4_f2q1o")
+shader_parameter/radius = 0.48
+shader_parameter/effectControl = 0.304
+shader_parameter/burnSpeed = 0.239
+shader_parameter/shape = 0.179
+shader_parameter/textureNoise = SubResource("NoiseTexture2D_to7r8")
+
+[sub_resource type="Gradient" id="Gradient_syg6l"]
+offsets = PackedFloat32Array(0.00290698, 1)
+colors = PackedColorArray(0.760971, 0.437646, 0.594785, 0.486275, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lhlh8"]
+gradient = SubResource("Gradient_syg6l")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Asteroid" type="CharacterBody2D" groups=["Asteroid"]]
+scale = Vector2(2.5, 2.5)
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_lvs1p")
+max_speed = 2200.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_3wg22")
+texture = ExtResource("2_6g01x")
+
+[node name="NoiseBorder" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_2jk2t")
+position = Vector2(-5, 7.4)
+scale = Vector2(1.18125, 1.14375)
+texture = SubResource("GradientTexture2D_lhlh8")
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-19, 2)
+polygon = PackedVector2Array(3, -1, -1, -12, 10, -22, 37, -16, 37, -6, 28, -5, 17, 8, 14, 32, 0, 29, 2, 11, 13, 6, -0.200001, 4.8, -5.4, 8.8, -15, 9, -14.6, 1.6, -5.8, 1.2, -0.6, 4)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

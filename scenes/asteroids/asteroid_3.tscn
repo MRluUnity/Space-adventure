@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://csq32j7muy2tt"]
+
+[ext_resource type="Script" path="res://scenes/asteroids/asteroid_3.gd" id="1_dp1bv"]
+[ext_resource type="Shader" path="res://shaders/outline_shader.gdshader" id="2_7ghko"]
+[ext_resource type="Texture2D" uid="uid://dfegkdp56or5y" path="res://assets/asteroid_3.png" id="2_7j678"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3wg22"]
+shader = ExtResource("2_7ghko")
+shader_parameter/thickness = 0.5
+shader_parameter/ring_count = 16
+shader_parameter/ring_offset = null
+shader_parameter/outline_color = Color(0.894118, 0, 0.141176, 0.435294)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 0.3
+shader_parameter/square_border = false
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
+
+[node name="Asteroid" type="CharacterBody2D" groups=["Asteroid"]]
+scale = Vector2(2.5, 2.5)
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_dp1bv")
+min_speed = 300.0
+max_speed = 550.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.215686)
+material = SubResource("ShaderMaterial_3wg22")
+texture = ExtResource("2_7j678")
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-19, 2)
+polygon = PackedVector2Array(-15, 7.6, -15, 0.4, -5, -5.2, -2, -22, 16, -28, 19, -37, 38, -40, 41, -29, 20, -16, 40, -5, 44, 5, 25, 19, 13, 13, 13, -4, 2, -4, -8, 10)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,358 @@
+[gd_scene load_steps=4 format=3 uid="uid://drht5v4oa5tmp"]
+
+[ext_resource type="Script" path="res://scenes/setting/setting_interface.gd" id="2_6atfn"]
+[ext_resource type="PackedScene" uid="uid://0frv3gm1tlas" path="res://scenes/setting/main_volume.tscn" id="3_l8x66"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jmg1q"]
+
+[node name="SettingInterface" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_6atfn")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="SidebarPanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_jmg1q")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/SidebarPanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="ScreenButton" type="Button" parent="MarginContainer/HBoxContainer/SidebarPanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "界面"
+
+[node name="AudioButton" type="Button" parent="MarginContainer/HBoxContainer/SidebarPanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "声音"
+
+[node name="GraphicsButton" type="Button" parent="MarginContainer/HBoxContainer/SidebarPanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "视频"
+
+[node name="InputButton" type="Button" parent="MarginContainer/HBoxContainer/SidebarPanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "操作"
+
+[node name="LanguageButton" type="Button" parent="MarginContainer/HBoxContainer/SidebarPanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "语言"
+
+[node name="Back" type="Button" parent="MarginContainer/HBoxContainer/SidebarPanelContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "返回"
+
+[node name="ContextPanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ContextMarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Screen" type="PanelContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer"]
+custom_minimum_size = Vector2(600, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "分辨率"
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+alignment = 1
+selected = 0
+item_count = 1
+popup/item_0/text = "1080 * 720"
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer"]
+custom_minimum_size = Vector2(600, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer6"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "窗口模式"
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer6"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+alignment = 1
+selected = 0
+item_count = 4
+popup/item_0/text = "全屏"
+popup/item_1/text = "无边框"
+popup/item_1/id = 1
+popup/item_2/text = "窗口"
+popup/item_2/id = 2
+popup/item_3/text = "无边框全屏"
+popup/item_3/id = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer"]
+custom_minimum_size = Vector2(600, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "屏幕震动"
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+alignment = 1
+selected = 0
+item_count = 4
+popup/item_0/text = "关闭"
+popup/item_1/text = "轻微"
+popup/item_1/id = 1
+popup/item_2/text = "普通"
+popup/item_2/id = 2
+popup/item_3/text = "强烈"
+popup/item_3/id = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer"]
+custom_minimum_size = Vector2(600, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "场景过度效果"
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+alignment = 1
+selected = 4
+item_count = 7
+popup/item_0/text = "关闭"
+popup/item_1/text = "右到左"
+popup/item_1/id = 1
+popup/item_2/text = "下到上"
+popup/item_2/id = 2
+popup/item_3/text = "右下到左上"
+popup/item_3/id = 3
+popup/item_4/text = "左到右"
+popup/item_4/id = 4
+popup/item_5/text = "上到下"
+popup/item_5/id = 5
+popup/item_6/text = "左上到右下"
+popup/item_6/id = 6
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer"]
+custom_minimum_size = Vector2(600, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "界面大小"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+alignment = 1
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer"]
+custom_minimum_size = Vector2(600, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "按钮加载时间"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+step = 0.5
+alignment = 1
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer"]
+custom_minimum_size = Vector2(600, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer7"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "按钮进度条显示"
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer7"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "显示/隐藏"
+alignment = 1
+icon_alignment = 1
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer"]
+custom_minimum_size = Vector2(600, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer8"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "手柄说明显示"
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Screen/VBoxContainer/HBoxContainer8"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "显示/隐藏"
+alignment = 1
+icon_alignment = 1
+
+[node name="Audio" type="PanelContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Audio"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 16
+
+[node name="MainVolume" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Audio/VBoxContainer" instance=ExtResource("3_l8x66")]
+unique_name_in_owner = true
+layout_mode = 2
+max_volume = 1.0
+
+[node name="SFXVolume" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Audio/VBoxContainer" instance=ExtResource("3_l8x66")]
+unique_name_in_owner = true
+layout_mode = 2
+volume_name = "音效"
+max_volume = 1.0
+current_bus = 1
+
+[node name="AmbientSFXVolume" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Audio/VBoxContainer" instance=ExtResource("3_l8x66")]
+unique_name_in_owner = true
+layout_mode = 2
+volume_name = "环境声"
+max_volume = 1.0
+current_bus = 2
+
+[node name="BGMVolume" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Audio/VBoxContainer" instance=ExtResource("3_l8x66")]
+unique_name_in_owner = true
+layout_mode = 2
+volume_name = "背景音乐"
+max_volume = 1.0
+current_bus = 3
+
+[node name="Graphics" type="PanelContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Input" type="PanelContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Language" type="PanelContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Language"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Chinese" type="Button" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Language/VBoxContainer"]
+layout_mode = 2
+text = "中文（简体）"
+
+[node name="Chinese2" type="Button" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Language/VBoxContainer"]
+layout_mode = 2
+text = "中文（繁体）"
+
+[node name="English" type="Button" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Language/VBoxContainer"]
+layout_mode = 2
+text = "English"
+
+[node name="Japanese" type="Button" parent="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Language/VBoxContainer"]
+layout_mode = 2
+text = "日本語"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/SidebarPanelContainer/VBoxContainer/ScreenButton" to="." method="_on_screen_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/SidebarPanelContainer/VBoxContainer/AudioButton" to="." method="_on_audio_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/SidebarPanelContainer/VBoxContainer/GraphicsButton" to="." method="_on_graphics_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/SidebarPanelContainer/VBoxContainer/InputButton" to="." method="_on_input_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/SidebarPanelContainer/VBoxContainer/LanguageButton" to="." method="_on_language_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/SidebarPanelContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Language/VBoxContainer/Chinese" to="." method="_on_chinese_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Language/VBoxContainer/Chinese2" to="." method="_on_chinese_2_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Language/VBoxContainer/English" to="." method="_on_english_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ContextPanelContainer/ContextMarginContainer/Language/VBoxContainer/Japanese" to="." method="_on_japanese_pressed"]

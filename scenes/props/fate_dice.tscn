@@ -1,0 +1,40 @@
+[gd_scene load_steps=14 format=3 uid="uid://chv2jks4fdbl0"]
+
+[ext_resource type="Script" path="res://scenes/props/fate_dice.gd" id="1_hy5yl"]
+[ext_resource type="Texture2D" uid="uid://bhosnnfhtiplo" path="res://assets/prop_4.png" id="2_7e44e"]
+[ext_resource type="PackedScene" uid="uid://dw4r0fpppj7fm" path="res://scenes/props/black_hole.tscn" id="2_usrmq"]
+[ext_resource type="PackedScene" uid="uid://dmjpeidp7y7fa" path="res://scenes/props/boundary_stabilizer.tscn" id="3_pst0g"]
+[ext_resource type="PackedScene" uid="uid://54gy3c7es7uo" path="res://scenes/props/damaged_armour.tscn" id="4_t7put"]
+[ext_resource type="PackedScene" uid="uid://byxwvlf3hhc2x" path="res://scenes/props/deceleration_machine.tscn" id="5_k160q"]
+[ext_resource type="PackedScene" uid="uid://c8dtvy8uoxcbo" path="res://scenes/props/force_field_galaxy.tscn" id="6_l4vsi"]
+[ext_resource type="PackedScene" uid="uid://bm4jcqx5p43xo" path="res://scenes/props/gravity_eliminator.tscn" id="7_0lqjy"]
+[ext_resource type="PackedScene" uid="uid://b2bmi66cdt181" path="res://scenes/props/laser_transmitter.tscn" id="8_ng8f0"]
+[ext_resource type="PackedScene" uid="uid://dr7d0lixpxy5t" path="res://scenes/props/repair_tool.tscn" id="9_riwpk"]
+[ext_resource type="PackedScene" uid="uid://548f0478ta0a" path="res://scenes/props/spare_ship.tscn" id="10_ikbs6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_swv3t"]
+size = Vector2(96, 96)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wkow7"]
+radius = 68.0074
+
+[node name="FateDice" type="CharacterBody2D"]
+collision_layer = 8
+script = ExtResource("1_hy5yl")
+props = Array[PackedScene]([ExtResource("2_usrmq"), ExtResource("3_pst0g"), ExtResource("4_t7put"), ExtResource("5_k160q"), ExtResource("6_l4vsi"), ExtResource("7_0lqjy"), ExtResource("8_ng8f0"), ExtResource("9_riwpk"), ExtResource("10_ikbs6")])
+texture = ExtResource("2_7e44e")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_7e44e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_swv3t")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_wkow7")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

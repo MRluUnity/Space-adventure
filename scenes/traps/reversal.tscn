@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bw0qa70b3mtq"]
+
+[ext_resource type="Script" path="res://scenes/traps/reversal.gd" id="1_665jn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5tpt7"]
+size = Vector2(10, 2016)
+
+[node name="Reversal" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_665jn")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 1008, 0, -1008)
+default_color = Color(0.768817, 0.263, 0.525151, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5tpt7")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

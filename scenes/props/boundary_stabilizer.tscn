@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmjpeidp7y7fa"]
+
+[ext_resource type="Script" path="res://boundary_stabilizer.gd" id="1_yr7bq"]
+[ext_resource type="Texture2D" uid="uid://begbexkpqvnpq" path="res://assets/prop_3.png" id="2_3wwia"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bske8"]
+radius = 63.5059
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5w6na"]
+radius = 74.2428
+
+[node name="BoundaryStabilizer" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_yr7bq")
+texture = ExtResource("2_3wwia")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_3wwia")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bske8")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_5w6na")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

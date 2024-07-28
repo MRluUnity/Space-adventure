@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dr7d0lixpxy5t"]
+
+[ext_resource type="Script" path="res://scenes/props/repair_tool.gd" id="1_d0m4r"]
+[ext_resource type="Texture2D" uid="uid://bwb7rmo2suajy" path="res://assets/Sprite-0001.png" id="2_xsfps"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ghahc"]
+radius = 64.5368
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3jhqv"]
+radius = 73.0616
+
+[node name="RepairTool" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_d0m4r")
+min_speed = 300.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_xsfps")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ghahc")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_3jhqv")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

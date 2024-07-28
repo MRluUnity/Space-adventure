@@ -1,0 +1,563 @@
+[gd_scene load_steps=26 format=3 uid="uid://dmi7ltjn53hs1"]
+
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_3mff4"]
+[ext_resource type="Script" path="res://scenes/main/main_button_group.gd" id="1_3urmr"]
+[ext_resource type="Shader" path="res://shaders/star_sky.gdshader" id="1_5buk1"]
+[ext_resource type="Shader" path="res://shaders/ground_glass.gdshader" id="4_n1d4r"]
+[ext_resource type="Script" path="res://scenes/main/leader_board.gd" id="5_ij2ki"]
+[ext_resource type="Script" path="res://scenes/main/diffculty_panel.gd" id="6_ndgc5"]
+[ext_resource type="PackedScene" uid="uid://drht5v4oa5tmp" path="res://scenes/setting/setting.tscn" id="7_vlsv2"]
+[ext_resource type="Texture2D" uid="uid://cuijsdkpbbtwh" path="res://assets/prop_1.png" id="8_bcia1"]
+[ext_resource type="Script" path="res://scenes/main/codex.gd" id="8_k37to"]
+[ext_resource type="Script" path="res://scenes/main/props_button_group.gd" id="8_lw5j2"]
+[ext_resource type="Texture2D" uid="uid://bxn0uqy7k56ef" path="res://assets/prop_2.png" id="9_nlqw4"]
+[ext_resource type="Texture2D" uid="uid://begbexkpqvnpq" path="res://assets/prop_3.png" id="10_7eqsc"]
+[ext_resource type="Texture2D" uid="uid://tgf5644n1x1b" path="res://assets/player.png" id="11_g4lwa"]
+[ext_resource type="Texture2D" uid="uid://bhosnnfhtiplo" path="res://assets/prop_4.png" id="13_yqcus"]
+[ext_resource type="Script" path="res://scenes/main/codex_context.gd" id="15_htr1q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ken3o"]
+shader = ExtResource("1_5buk1")
+shader_parameter/dimensions = Vector2(1024, 600)
+shader_parameter/small_stars = 50.0
+shader_parameter/small_stars_far_size = 0.5
+shader_parameter/small_stars_near_size = 1.0
+shader_parameter/large_stars = 8.0
+shader_parameter/large_stars_far_size = 0.5
+shader_parameter/large_stars_near_size = 1.0
+shader_parameter/far_stars_color = Color(0.5, 0, 1, 1)
+shader_parameter/near_stars_color = Color(1, 1, 1, 1)
+shader_parameter/base_scroll_speed = 0.05
+shader_parameter/additional_scroll_speed = 0.05
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0k0po"]
+shader = ExtResource("4_n1d4r")
+shader_parameter/lod = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_075ev"]
+font_size = 48
+outline_size = 3
+outline_color = Color(0.877045, 0.441096, 0.849772, 1)
+shadow_size = 2
+shadow_color = Color(1, 1, 1, 0.529412)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="Animation" id="Animation_d6mm0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [5.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ScrollContainer/VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ogctn"]
+resource_name = "leader_board_enter"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 5.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ScrollContainer/VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_1fu4r"]
+resource_name = "leader_board_exit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ScrollContainer/VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ktkqb"]
+_data = {
+"RESET": SubResource("Animation_d6mm0"),
+"leader_board_enter": SubResource("Animation_ogctn"),
+"leader_board_exit": SubResource("Animation_1fu4r")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_la3vp"]
+shader = ExtResource("4_n1d4r")
+shader_parameter/lod = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_4bl0d"]
+font_size = 32
+outline_size = 3
+outline_color = Color(0.807859, 0.118035, 0.767418, 1)
+shadow_size = 2
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_p4nl0"]
+font_size = 24
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_3mff4")
+
+[node name="Background" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+material = SubResource("ShaderMaterial_ken3o")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="MainButtonGroup" type="VBoxContainer" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+script = ExtResource("1_3urmr")
+
+[node name="StartButton" type="Button" parent="UI/MainButtonGroup"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "开始游戏"
+
+[node name="LeaderboardButton" type="Button" parent="UI/MainButtonGroup"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "排行榜"
+
+[node name="SettingButton" type="Button" parent="UI/MainButtonGroup"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "游戏设置"
+
+[node name="CodexButton" type="Button" parent="UI/MainButtonGroup"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "图鉴"
+
+[node name="ExitButton" type="Button" parent="UI/MainButtonGroup"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "退出游戏"
+
+[node name="ContextControl" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LeaderBoard" type="PanelContainer" parent="UI/ContextControl"]
+visible = false
+material = SubResource("ShaderMaterial_0k0po")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_ij2ki")
+
+[node name="Label" type="Label" parent="UI/ContextControl/LeaderBoard"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "排行榜"
+label_settings = SubResource("LabelSettings_075ev")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/ContextControl/LeaderBoard"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ContextControl/LeaderBoard/ScrollContainer"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+
+[node name="BackButton" type="Button" parent="UI/ContextControl/LeaderBoard"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "返回"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/ContextControl/LeaderBoard"]
+libraries = {
+"": SubResource("AnimationLibrary_ktkqb")
+}
+
+[node name="DifficultyPanel" type="PanelContainer" parent="UI/ContextControl"]
+visible = false
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0
+grow_vertical = 2
+script = ExtResource("6_ndgc5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ContextControl/DifficultyPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="EasyButton" type="Button" parent="UI/ContextControl/DifficultyPanel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_vertical = 0
+text = "简单难度"
+
+[node name="SameButton" type="Button" parent="UI/ContextControl/DifficultyPanel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_vertical = 0
+text = "普通难度"
+
+[node name="HardButton" type="Button" parent="UI/ContextControl/DifficultyPanel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+size_flags_vertical = 0
+text = "困难难度"
+
+[node name="BackButton" type="Button" parent="UI/ContextControl/DifficultyPanel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 64)
+layout_mode = 2
+text = "取消"
+
+[node name="SettingInterface" parent="UI/ContextControl" instance=ExtResource("7_vlsv2")]
+visible = false
+layout_mode = 1
+
+[node name="Codex" type="PanelContainer" parent="UI/ContextControl"]
+visible = false
+material = SubResource("ShaderMaterial_la3vp")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_k37to")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="UI/ContextControl/Codex"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TabContainer" type="TabContainer" parent="UI/ContextControl/Codex/HBoxContainer"]
+custom_minimum_size = Vector2(1080, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tab_alignment = 1
+current_tab = 0
+
+[node name="Props" type="PanelContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="PropsButtonGroup" type="GridContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 32
+columns = 2
+script = ExtResource("8_lw5j2")
+
+[node name="ForceFieldGalaxy" type="Button" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+icon = ExtResource("8_bcia1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="BlackHole" type="Button" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+icon = ExtResource("9_nlqw4")
+icon_alignment = 1
+expand_icon = true
+
+[node name="BoundaryStabilizer" type="Button" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+icon = ExtResource("10_7eqsc")
+icon_alignment = 1
+expand_icon = true
+
+[node name="SpareShip" type="Button" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+icon = ExtResource("11_g4lwa")
+icon_alignment = 1
+expand_icon = true
+
+[node name="FateDice" type="Button" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+icon = ExtResource("13_yqcus")
+icon_alignment = 1
+expand_icon = true
+
+[node name="DamagedArmour" type="Button" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+icon = ExtResource("8_bcia1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="DecelerationMachine" type="Button" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+icon = ExtResource("8_bcia1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="GravityEliminator" type="Button" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+icon = ExtResource("8_bcia1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="RepairTool" type="Button" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+icon = ExtResource("8_bcia1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="LaserTransmiter" type="Button" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+icon = ExtResource("8_bcia1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="CodexContext" type="PanelContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(800, 800)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("15_htr1q")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/CodexContext"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/CodexContext/MarginContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/CodexContext/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/CodexContext/MarginContainer/VBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(512, 512)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("8_bcia1")
+expand_mode = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/CodexContext/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/CodexContext/MarginContainer/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/CodexContext/MarginContainer/VBoxContainer/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "力场护盾"
+label_settings = SubResource("LabelSettings_4bl0d")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/CodexContext/MarginContainer/VBoxContainer/PanelContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "持续类道具
+持续时间：10秒
+作用：在玩家周围创建一个护盾，护盾会摧毁所有撞到的陨石，并给予基本陨石计分。"
+label_settings = SubResource("LabelSettings_p4nl0")
+autowrap_mode = 2
+
+[node name="Traps" type="PanelContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Asteroids" type="PanelContainer" parent="UI/ContextControl/Codex/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="BackButton" type="Button" parent="UI/ContextControl/Codex/HBoxContainer"]
+custom_minimum_size = Vector2(256, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "返回"
+
+[connection signal="pressed" from="UI/MainButtonGroup/StartButton" to="UI/MainButtonGroup" method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/MainButtonGroup/LeaderboardButton" to="UI/MainButtonGroup" method="_on_leaderboard_button_pressed"]
+[connection signal="pressed" from="UI/MainButtonGroup/SettingButton" to="UI/MainButtonGroup" method="_on_setting_button_pressed"]
+[connection signal="pressed" from="UI/MainButtonGroup/CodexButton" to="UI/MainButtonGroup" method="_on_codex_button_pressed"]
+[connection signal="pressed" from="UI/MainButtonGroup/ExitButton" to="UI/MainButtonGroup" method="_on_exit_button_pressed"]
+[connection signal="visibility_changed" from="UI/ContextControl/LeaderBoard" to="UI/ContextControl/LeaderBoard" method="_on_visibility_changed"]
+[connection signal="pressed" from="UI/ContextControl/LeaderBoard/BackButton" to="UI/ContextControl/LeaderBoard" method="_on_back_button_pressed"]
+[connection signal="pressed" from="UI/ContextControl/DifficultyPanel/VBoxContainer/EasyButton" to="UI/ContextControl/DifficultyPanel" method="_on_easy_button_pressed"]
+[connection signal="pressed" from="UI/ContextControl/DifficultyPanel/VBoxContainer/SameButton" to="UI/ContextControl/DifficultyPanel" method="_on_same_button_pressed"]
+[connection signal="pressed" from="UI/ContextControl/DifficultyPanel/VBoxContainer/HardButton" to="UI/ContextControl/DifficultyPanel" method="_on_hard_button_pressed"]
+[connection signal="pressed" from="UI/ContextControl/DifficultyPanel/VBoxContainer/BackButton" to="UI/ContextControl/DifficultyPanel" method="_on_back_button_pressed"]
+[connection signal="update_codex_context" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/CodexContext" method="_on_props_button_group_update_codex_context"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup/ForceFieldGalaxy" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" method="_on_force_field_galaxy_pressed"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup/BlackHole" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" method="_on_black_hole_pressed"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup/BoundaryStabilizer" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" method="_on_boundary_stabilizer_pressed"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup/SpareShip" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" method="_on_spare_ship_pressed"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup/FateDice" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" method="_on_fate_dice_pressed"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup/DamagedArmour" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" method="_on_damaged_armour_pressed"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup/DecelerationMachine" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" method="_on_deceleration_machine_pressed"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup/GravityEliminator" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" method="_on_gravity_eliminator_pressed"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup/RepairTool" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" method="_on_repair_tool_pressed"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup/LaserTransmiter" to="UI/ContextControl/Codex/HBoxContainer/TabContainer/Props/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/PropsButtonGroup" method="_on_laser_transmiter_pressed"]
+[connection signal="pressed" from="UI/ContextControl/Codex/HBoxContainer/BackButton" to="UI/ContextControl/Codex" method="_on_back_button_pressed"]

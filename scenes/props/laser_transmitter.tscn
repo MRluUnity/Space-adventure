@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://b2bmi66cdt181"]
+
+[ext_resource type="Script" path="res://scenes/props/laser_transmitter.gd" id="1_sb7eo"]
+[ext_resource type="Texture2D" uid="uid://bwb7rmo2suajy" path="res://assets/Sprite-0001.png" id="2_argnh"]
+[ext_resource type="Shader" path="res://shaders/hight_light.gdshader" id="2_upo3n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_re1be"]
+shader = ExtResource("2_upo3n")
+shader_parameter/shine_color = Color(0.29219, 0.29219, 0.29219, 1)
+shader_parameter/shine_progress = 0.5
+shader_parameter/shine_size = 0.1
+shader_parameter/shine_angle = 45.0
+shader_parameter/is_up_and_down = null
+shader_parameter/amplitude = 10.0
+shader_parameter/speed = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0jyhy"]
+radius = 65.1153
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sb8ds"]
+radius = 78.1601
+
+[node name="LaserTransmitter" type="CharacterBody2D"]
+collision_layer = 8
+script = ExtResource("1_sb7eo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_re1be")
+texture = ExtResource("2_argnh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0jyhy")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_sb8ds")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
